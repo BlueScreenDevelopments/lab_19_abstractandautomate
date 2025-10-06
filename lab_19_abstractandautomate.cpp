@@ -31,6 +31,11 @@ public:
         head = n;
     }
 
-    void dispaly()
+    void display() {
+        cout << "Movie: " << title << endl;
+        cout <<"--------------------------" << endl;
+        int count = 0;
+        double sum = 0.0;
+    }
 
 }
