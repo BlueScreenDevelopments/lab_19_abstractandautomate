@@ -1,6 +1,9 @@
 #include <iostream>
+#include <string>
+#include <iomanip>
 
 using namespace std;
+
 /*
 Brandon Julao
 COMSC-210-5470
