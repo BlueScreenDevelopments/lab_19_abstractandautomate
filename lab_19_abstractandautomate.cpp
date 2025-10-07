@@ -48,6 +48,7 @@ public:
 
         for (ReviewNode* p = head; p; p = p->next) {
             cout << " Review #" << ++count << ": "
+                 << fixed << setprecision(1) << p->rating
                  << " - " << p->comment << endl;
 
             sum+= p->rating;
@@ -76,9 +77,9 @@ int main () {
     // randomizer
     srand(static_cast<unsigned>(time(nullptr)));
 
-    ifstream fin("review.txt");
+    ifstream fin("reviews.txt");
         if(!fin) {
-            cerr <<"Error file found found";
+            cerr <<"Error file not found";
             return 1;
         }
 
@@ -91,7 +92,8 @@ int main () {
 
         Movie m(title);
 
-        if (getline(fin,comment)) {
+        for (int i= 0; i < 3; ++i) {
+        if (getline(fin,comment)) break;
             double rating = (rand() % 41 + 10) / 10.0;
             m.addReview(rating,comment);
         }
