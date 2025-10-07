@@ -28,9 +28,37 @@ class Movie{
     string title;
     ReviewNode* head;
 
+    //helper function to clear linked list
+    void clear(){
+        while (head){
+            ReviewNode* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+
 public:
     //constructor
     Movie(const string& t) : title(t), head(nullptr){}
+
+    //delete copy constructor and assignment operator
+    Movie(const Movie&) = delete;
+    Movie& operator=(const Movie&) = delete;
+
+    //move constructor
+    Movie(Movie&& other) noexcept : title(move(other.title)), head(other.head) {
+        other.head = nullptr;
+    }
+    //move assignment operator
+    Movie& operator=(Movie&& other) noexcept {
+        if (this != &other) {
+            clear();
+            title = move(other.title);
+            head = other.head;
+            other.head = nullptr;
+        }
+        return *this;
+    }
 
     //add review
     void addReview(double rating, const string& comment) {
@@ -58,7 +86,7 @@ public:
             cout <<" No reviews yet.\n";
         } else {
             cout << " Average Rating: " << fixed << setprecision(2)
-                 << (sum / count) << "\n";
+                 << (sum / count) << "\n\n";
         }
     }
 
@@ -84,21 +112,23 @@ int main () {
         }
 
     vector<Movie> movies;
+    movies.reserve(6); //reserve space for 6 movies
+
     string title, comment;
 
     //read titles, and reviews
-    while(getline(fin,title)) {
+    while(getline(fin, title)) {
         if (title.empty()) continue;
 
-        Movie m(title);
+        movies.emplace_back(title);
+        Movie &m = movies.back();
 
         for (int i= 0; i < 3; ++i) {
-        if (getline(fin,comment)) break;
+        if (!getline(fin, comment)) break;
             double rating = (rand() % 41 + 10) / 10.0;
-            m.addReview(rating,comment);
+            m.addReview(rating, comment);
         }
         
-        movies.push_back(m);
     }
     fin.close();
 
