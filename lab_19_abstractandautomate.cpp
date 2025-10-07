@@ -36,6 +36,13 @@ public:
         cout <<"--------------------------" << endl;
         int count = 0;
         double sum = 0.0;
+
+        for (ReviewNode* p = head; p = p->next){
+            cout << " Review #" << ++count << ": "
+                 << " - " << p->comment << endl;
+
+            sum+= p->rating;
+        }
     }
 
 }
