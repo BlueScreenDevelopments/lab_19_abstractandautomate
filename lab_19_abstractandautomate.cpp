@@ -86,4 +86,23 @@ int main () {
     string title, comment;
 
     //read titles, and reviews
+    while(getline(fin,title)) {
+        if (title.empty()) continue;
+
+        Movie m(title);
+
+        if (getline(fin,comment)) {
+            double rating = (rand() % 41 + 10) / 10.0;
+            m.addReview(rating,comment);
+        }
+        
+        movies.push_back(m);
+    }
+    fin.close();
+
+        //display reviews
+    for (auto& m : movies)
+        m.display();
+
+        return 0;
 }
